@@ -43,7 +43,8 @@ void parse_input(char *line, CommandNode **head)
 
 void handle_builtins(char *line)
 {
-    char *line_copy, char *exit = "exit", char *cd = "cd", char *previousdir = "-"
+    char *line_copy, char *exit = "exit", char *cd = "cd", char *previousdir = "-";
+    char *env = "env";
     copy_string(line, line_copy);
     char *token = strtok(line_copy, " ");
 
@@ -53,35 +54,24 @@ void handle_builtins(char *line)
             exit(0);
         else if (string_compare(token, cd) == 0)
         {
-            // Handle cd command
             token = strtok(NULL, " ");
             if (token != NULL)
             {
                 if (string_compare(token, previousdir) == 0)
-                {
-                    // Handle cd - command
-                    // Logic to change to the previous directory
-                }
+                    change_to_previous_directory();
                 else
-                {
-                    // Handle cd [path] command
-                    // Logic to change to the specified directory
-                }
+                    change_directory(token);
             }
             else
-            {
-                // Handle cd without arguments (cd $HOME)
-                // Logic to change to the home directory
-            }
+                change_to_home_directory();
             // Update PWD environment variable
+            // this will need to be updated when we get to handling setenv and getenv
             char *cwd = getcwd(NULL, 0);
             setenv("PWD", cwd, 1);
             free(cwd);
         }
-        else if (string_compare(token, "env") == 0)
-        {
+        else if (string_compare(token, env) == 0)
             print_env();
-        }
     }
 }
 
