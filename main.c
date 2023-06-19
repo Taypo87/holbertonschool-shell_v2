@@ -26,7 +26,9 @@ int main(int argc, char **argv, char **envp)
             exit(0);
         }
         handle_builtins(line); //check for builtins exit cd env
-        parse_input(line)
+        list = parse_input(line);
+
+        execute_commands(list);
         
 
     }

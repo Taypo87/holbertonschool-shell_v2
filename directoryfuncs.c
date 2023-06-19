@@ -1,3 +1,5 @@
+#include "header.h"
+
 uid_t get_uid(void)
 {
     const char *self_path = "/proc/self";
@@ -52,27 +54,5 @@ void change_to_previous_directory()
 
 void change_directory(char *path)
 {
-    if (path == NULL)
-    {
-        const char *home_directory = getenv("HOME");  // Get the value of the HOME environment variable
-
-        if (home_directory != NULL)
-        {
-            if (chdir(home_directory) == -1)
-            {  // Change to the home directory using chdir
-                perror("chdir");
-            }
-        }
-        else
-        {
-            printf("Home directory not found\n");
-        }
-    }
-    else
-    {
-        if (chdir(path) == -1)
-        {  // Change to the specified directory using chdir
-            perror("chdir");
-        }
-    }
+    chdir(path);
 }

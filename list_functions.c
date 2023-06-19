@@ -1,9 +1,11 @@
+#include "header.h"
+
 CommandNode *create_node(char *command)
 {
     CommandNode *node = (CommandNode *)malloc(sizeof(CommandNode));
     node->command = strdup(command);
     node->args = NULL;
-    node->pipe = 0;
+    node->pipeflag = 0;
     node->redirection_file = NULL;
     node->next = NULL;
     return node;

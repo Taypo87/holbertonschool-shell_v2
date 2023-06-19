@@ -1,7 +1,6 @@
 #include "header.h"
 
-
-void parse_input(char *line, CommandNode **head)
+CommandNode* parse_input(char *line, CommandNode **head)
 {
     CommandNode *current = NULL;
     char *token = strtok(line, " \n");
@@ -15,17 +14,19 @@ void parse_input(char *line, CommandNode **head)
         *head = create_node(line);
         current = *head;
         add_argument(current, line);
-        return (void);
+        return (head);
     }
-
     while (token != NULL)
     {
         if (check_pipe(token))
-            handle_pipe(head, &current);
+            handle_pipe(head, current, line);
         else if (check_redirections(token))
         {
             if (current != NULL)
+            {
                 handle_redirection(current, token);
+                break;
+            }
         }
         else
         {
@@ -39,18 +40,19 @@ void parse_input(char *line, CommandNode **head)
         }
         token = strtok(NULL, " \n");
     }
+    return(head);
 }
 
 void handle_builtins(char *line)
 {
-    char *line_copy, char *exit = "exit", char *cd = "cd", char *previousdir = "-";
+    char *line_copy, *exit_string = "exit", *cd = "cd", *previousdir = "-";
     char *env = "env";
     copy_string(line, line_copy);
     char *token = strtok(line_copy, " ");
 
     if (token != NULL)
     {
-        if (string_compare(token, exit) == 0)
+        if (string_compare(token, exit_string) == 0)
             exit(0);
         else if (string_compare(token, cd) == 0)
         {
@@ -74,4 +76,5 @@ void handle_builtins(char *line)
             print_env();
     }
 }
+
 
