@@ -56,25 +56,25 @@ void handle_redirection(CommandNode *node, char *redirection)
     {
         char *file = strtok(NULL, " \n");
         node->redirection = ">";
-        node->redirection_file = strdup(file);
+        node->redirection_file = copy_string(file);
     }
     else if (string_compare(redirection, single_left) == 0)
     {
         char *file = strtok(NULL, " \n");
         node->redirection = "<";
-        node->redirection_file = strdup(file);
+        node->redirection_file = copy_string(file);
     }
     else if (string_compare(redirection, double_right) == 0)
     {
         char *file = strtok(NULL, " \n");
         node->redirection = ">>";
-        node->redirection_file = strdup(file);
+        node->redirection_file = copy_string(file);
     }
 	else if (string_compare(redirection, double_left) == 0)
     {
         char *file = strtok(NULL, " \n");
         node->redirection = "<<";
-        node->redirection_file = strdup(file);
+        node->redirection_file = copy_string(file);
     }
 }
 

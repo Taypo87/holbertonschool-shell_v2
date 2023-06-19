@@ -23,18 +23,19 @@ int main(int argc, char **argv, char **envp)
         }
         else
         {
-            is_builtin = handle_builtins(line); //check for builtins exit cd env
+            is_builtin = handle_builtins(line, &head); //check for builtins exit cd env
             head = parse_input(line, &head);
 
             if (is_builtin == 0)
             {
                 head->command = pathfinder(head->command);
                 execute_commands(head);
+                free_command_list(&head);
             }
-            free(line);
-            free_command_list(head);
         }
     
     }
+    free(line);
+    free_command_list(&head);
     exit(0);
 }

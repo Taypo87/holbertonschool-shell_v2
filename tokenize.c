@@ -3,7 +3,7 @@
 CommandNode* parse_input(char *line, CommandNode **head)
 {
     CommandNode *current = NULL;
-    char *line_copy = malloc(string_length(line) + 1);
+    char *line_copy;
     line_copy = copy_string(line);
     char *token = strtok(line_copy, " \n");
     if (token != NULL)
@@ -43,15 +43,16 @@ CommandNode* parse_input(char *line, CommandNode **head)
         }
         token = strtok(NULL, " \n");
     }
+    free(line_copy);
     return(*head);
 }
 
-size_t handle_builtins(char *line)
+size_t handle_builtins(char *line, CommandNode **head)
 {
     char *exit_string = "exit", *cd = "cd", *previousdir = "-";
     char *env = "env";
     char *line_copy, *token;
-    copy_string(line, line_copy);
+    line_copy = copy_string(line);
 
     token = strtok(line_copy, " ");
 
@@ -61,6 +62,7 @@ size_t handle_builtins(char *line)
         {
             free(line_copy);
             free(line);
+            free_command_list(head);
             exit(0);
         }
         else if (string_compare(token, cd) == 0)
@@ -91,6 +93,7 @@ size_t handle_builtins(char *line)
             // this will need to be updated when we get to handling setenv and getenv
             char *cwd = getcwd(NULL, 0);
             setenv("PWD", cwd, 1);
+            free(line_copy);
             free(cwd);
         }
         else if (string_compare(token, env) == 0)
@@ -100,6 +103,7 @@ size_t handle_builtins(char *line)
             return(1);
         }
     }
+    free(line_copy);
     return(0);
 }
 
@@ -118,7 +122,7 @@ char *pathfinder(char *command)
 	}
 	path_tok = NULL;
 	current_path = getenv("PATH");
-	temp_path = strdup(current_path);   // changes
+	temp_path = copy_string(current_path);   // changes
 	path_tok = strtok(temp_path, ":");
 	while (path_tok)
 	{
