@@ -3,8 +3,11 @@
 CommandNode* parse_input(char *line, CommandNode **head)
 {
     CommandNode *current = NULL;
-    char *token = strtok(line, " \n");
+    char *line_copy = malloc(string_length(line) + 1);
+    copy_string(line, line_copy);
+    char *token = strtok(line_copy, " \n");
     if (token != NULL)
+    
     {
         *head = create_node(token);
         current = *head;
@@ -14,7 +17,7 @@ CommandNode* parse_input(char *line, CommandNode **head)
         *head = create_node(line);
         current = *head;
         add_argument(current, line);
-        return (head);
+        return (*head);
     }
     while (token != NULL)
     {
@@ -40,13 +43,14 @@ CommandNode* parse_input(char *line, CommandNode **head)
         }
         token = strtok(NULL, " \n");
     }
-    return(head);
+    return(*head);
 }
 
 void handle_builtins(char *line)
 {
-    char *line_copy, *exit_string = "exit", *cd = "cd", *previousdir = "-";
+    char *exit_string = "exit", *cd = "cd", *previousdir = "-";
     char *env = "env";
+    char *line_copy = malloc(string_length(line) + 1);
     copy_string(line, line_copy);
     char *token = strtok(line_copy, " ");
 

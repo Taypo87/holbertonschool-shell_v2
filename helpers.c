@@ -17,12 +17,12 @@ void handle_pipe(CommandNode **head, CommandNode *current, char* line)
     if (*head == NULL)
 	{
         *head = next_command;
-        *current = next_command;
+        current = next_command;
     }
 	else
 	{
-        (*current)->next = next_command;
-        *current = next_command;
+        (*current).next = next_command;
+        current = next_command;
     }
 
 }
@@ -35,13 +35,13 @@ int check_redirections(char *token)
 	char *double_right = ">>";
 
 	if (string_compare(token, single_left) == 0)
-		return(1)
+		return(1);
 	if (string_compare(token, double_left) == 0)
-		return(1)
+		return(1);
 	if (string_compare(token, single_right) == 0)
-		return(1)
+		return(1);
 	if (string_compare(token, double_right) == 0)
-		return(1)
+		return(1);
 	return(0);
 }
 
@@ -51,7 +51,7 @@ void handle_redirection(CommandNode *node, char *redirection)
 	char *double_left = "<<";
 	char *single_right = ">";
 	char *double_right = ">>";
-	
+
     if (string_compare(redirection, single_right) == 0)
     {
         char *file = strtok(NULL, " \n");

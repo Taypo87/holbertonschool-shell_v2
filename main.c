@@ -10,7 +10,7 @@ int main(int argc, char **argv, char **envp)
     // if operator is found
     char *line;
     char *buffer;
-    CommandNode list;
+    CommandNode *head;
 
     env = envp;
 
@@ -18,18 +18,21 @@ int main(int argc, char **argv, char **envp)
     {
         if (isatty(STDIN_FILENO))
 			printf("($) ");
-        if (getline(&line, 0, stdin) == -1)
+        line = malloc(sizeof(char *) * 256);
+        fflush(stdin);
+        if (getline(&line, 0, stdin) == EOF)
         {
             if (isatty(STDIN_FILENO) != 0)
 			    printf("\n");
-            free(line);
-            exit(0);
+            printf("I shouldnt see this message\n");
+            //break;
         }
         handle_builtins(line); //check for builtins exit cd env
-        list = parse_input(line);
+        head = parse_input(line, &head);
 
-        execute_commands(list);
-        
-
+        execute_commands(&(*head));
+        free(line);
+    
     }
+    exit(0);
 }

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -13,15 +14,16 @@
 
 
 
-typedef struct commands 
+typedef struct commands CommandNode;
+struct commands
 {
     char *command;
     char *args[13];
     char *redirection_file;
     char *redirection;
     int pipeflag;
-    struct CommandNode *next;
-} CommandNode;
+    CommandNode *next;
+};
 
 char **env;
 
@@ -51,6 +53,8 @@ void setup_input_redirection(CommandNode *command);
 void setup_append_redirection(CommandNode *command);
 void setup_heredoc_redirection(CommandNode *command);
 void setup_redirection(CommandNode *command);
+int check_redirections(char *token);
+void handle_redirection(CommandNode *node, char *redirection);
 
 #endif
 
