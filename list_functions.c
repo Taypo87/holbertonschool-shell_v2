@@ -2,10 +2,16 @@
 
 CommandNode *create_node(char *command)
 {
+    int i = 0;
+
     CommandNode *node = (CommandNode *)malloc(sizeof(CommandNode));
     node->command = strdup(command);
     node->pipeflag = 0;
     node->redirection_file = NULL;
+    for (i = 0; i < 13; i++)
+        {
+            node->args[i] = NULL;
+        }
     node->next = NULL;
     return node;
 }
@@ -36,13 +42,13 @@ void free_command_list(CommandNode *head)
 
 void add_argument(CommandNode *node, char *argument)
 {
-    int num_args = 0;
+    int num_args = 0, i = 0;
     if (node->args != NULL)
     {
         while (node->args[num_args] != NULL)
             num_args++;
     }
-
+  
     if (num_args < 12)
     {
         node->args[num_args] = strdup(argument);

@@ -2,7 +2,7 @@
 
 void setup_redirection(CommandNode *command)
 {
-    if (command->redirection)
+    if (command->redirection != NULL)
     {
         if (strcmp(command->redirection, ">") == 0)
         {

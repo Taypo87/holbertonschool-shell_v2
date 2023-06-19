@@ -30,9 +30,9 @@ char **env;
 
 int string_compare(char *str1, char *str2);
 int string_length(char *str);
-void copy_string(char *string, char *dest);
+char *copy_string(char *string);
 CommandNode* parse_input(char *line, CommandNode **head);
-void handle_builtins(char *line);
+size_t handle_builtins(char *line);
 int check_pipe(char *token);
 void handle_pipe(CommandNode **head, CommandNode *current, char* line);
 int print_env();
@@ -55,6 +55,7 @@ void setup_heredoc_redirection(CommandNode *command);
 void setup_redirection(CommandNode *command);
 int check_redirections(char *token);
 void handle_redirection(CommandNode *node, char *redirection);
+char *pathfinder(char *command);
 
 #endif
 

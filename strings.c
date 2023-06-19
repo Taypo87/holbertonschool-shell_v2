@@ -29,15 +29,20 @@ int string_length(char *str)
     return (i);
 }
 
-void copy_string(char *string, char *dest)
+char *copy_string(char *string)
 {
 	int i = 0;
+    char *dest;
+    int length = string_length(string);
+
+    dest = malloc((length + 1) * sizeof(char));
 
 	for (i = 0; string[i] != '\0'; i++)
 	{
 		dest[i] = string[i];
 	}
 	dest[i] = '\0';
+    return(dest);
 }
 
 
