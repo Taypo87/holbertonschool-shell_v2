@@ -25,7 +25,7 @@ void setup_redirection(CommandNode *command)
 
 void setup_pipe(CommandNode *current, int *pipefd, int input_fd)
 {
-    if (current->pipeflag)
+    if (current->pipeflag == 1)
     {
         if (pipe(pipefd) == -1)
         {
@@ -57,6 +57,7 @@ void execute_command(CommandNode *command, int input_fd)
     else if (pid == 0)  // Child process
     {
         setup_redirection(command);
+        printf("%s\n", command->command);
         execve(command->command, command->args, env);
         perror("execve");
         exit(EXIT_FAILURE);
@@ -72,7 +73,7 @@ void execute_command(CommandNode *command, int input_fd)
 
 void cleanup_pipe(CommandNode *current, int *pipefd, int input_fd)
 {
-    if (current->pipeflag)
+    if (current->pipeflag == 1)
     {
         close(pipefd[0]);
         if (input_fd != STDIN_FILENO)

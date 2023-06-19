@@ -11,8 +11,9 @@ void handle_pipe(CommandNode **head, CommandNode *current, char* line)
 	char *cmd;
     current->pipeflag = 1;
 	
-	cmd = strtok(line, " ");
+	cmd = strtok(line, " \n");
     CommandNode *next_command = create_node(cmd);
+    next_command->args[0] = copy_string(cmd);
 
     if (*head == NULL)
 	{
