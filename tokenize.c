@@ -130,6 +130,7 @@ char *pathfinder(char *command)
 		sprintf(fullpath, "%s/%s", path_tok, command);
 		if (access(fullpath, F_OK) == 0)
 		{
+            free(command);
 			free(temp_path);
 			return (fullpath);
 		}
