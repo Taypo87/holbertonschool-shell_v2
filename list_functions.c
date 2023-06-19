@@ -33,7 +33,6 @@ void free_command_list(CommandNode **head)
                 free(current->args[i]);
             }
         }
-        free(current->redirection);
         free(current->redirection_file);
         free(current);
 

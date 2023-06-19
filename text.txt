@@ -1,0 +1,15 @@
+/usr/bin/ls
+a.out
+directoryfuncs.c
+execute_funcs.c
+file_redirections.c
+header.h
+helpers.c
+list_functions.c
+main.c
+README.md
+refactor
+strings.c
+text.txt
+tokenize.c
+vgcore.16643
