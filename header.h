@@ -56,6 +56,9 @@ void setup_redirection(CommandNode *command);
 int check_redirections(char *token);
 void handle_redirection(CommandNode *node, char *redirection);
 char *pathfinder(char *command);
+ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+int fileno(FILE *stream);
+int setenv(const char *name, const char *value, int overwrite);
 
 #endif
 

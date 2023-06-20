@@ -1,15 +1,20 @@
+#include <stdio.h>
 #include "header.h"
 
 int main(int argc, char **argv, char **envp)
 {
  
     char *line = NULL;
-    size_t flags, bufsize = 0, is_builtin = 0;
-    char *buffer;
+    size_t bufsize = 0, is_builtin = 0;
+    int flags;
     CommandNode *head = NULL;
 
     env = envp;
 
+    if (argc > 1)
+    {
+        printf("%s\n", argv[1]);
+    }
     while (1)
     {
         if (isatty(STDIN_FILENO))

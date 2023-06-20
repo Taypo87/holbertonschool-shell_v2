@@ -44,7 +44,7 @@ void free_command_list(CommandNode **head)
 
 void add_argument(CommandNode *node, char *argument)
 {
-    int num_args = 0, i = 0;
+    int num_args = 0;
     if (node->args != NULL)
     {
         while (node->args[num_args] != NULL)
