@@ -2,7 +2,7 @@
 
 int set_env(EnvNode **top, char *key, char *value)
 {
-    EnvNode *current = *top;
+    EnvNode *current = *top, *node;
     while (current != NULL)
     {
         if (string_compare(current->key, key) == 0)
@@ -13,7 +13,7 @@ int set_env(EnvNode **top, char *key, char *value)
         }
         current = current->next;
     }
-    EnvNode *node = create_kv_node(key, value);
+    node = create_kv_node(key, value);
     add_node_to_list(top, node);
     return (1);
 }
@@ -57,7 +57,7 @@ int unset_env(EnvNode **top, char *key)
 }
 char **linked_list_to_array(EnvNode **top)
 {
-    int count = 0, length;
+    int count = 0, length, i = 0;
     char **array;
     EnvNode *current = *top;
 
@@ -74,7 +74,6 @@ char **linked_list_to_array(EnvNode **top)
     }
 
     current = *top;
-    int i = 0;
     while (current != NULL)
     {
         length = (string_length(current->key) + string_length(current->value) + 2);
@@ -95,7 +94,9 @@ char **linked_list_to_array(EnvNode **top)
 
 void free_array(char** array)
 {
-    for (int i = 0; array[i] != NULL; i++)
+    int i;
+
+    for (i = 0; array[i] != NULL; i++)
     {
         free(array[i]);
     }

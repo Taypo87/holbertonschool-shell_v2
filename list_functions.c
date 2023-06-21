@@ -20,6 +20,7 @@ CommandNode *create_node(char *command)
 void free_command_list(CommandNode **head)
 {
 	CommandNode *current = *head;
+	int i;
 
 	while (current != NULL)
 	{
@@ -28,7 +29,7 @@ void free_command_list(CommandNode **head)
 		free(current->command);
 		if (current->args != NULL)
 		{
-			for (int i = 0; current->args[i] != NULL; i++)
+			for (i = 0; current->args[i] != NULL; i++)
 			{
 				free(current->args[i]);
 			}
@@ -39,7 +40,7 @@ void free_command_list(CommandNode **head)
 		current = next;
 	}
 
-	*head = NULL; // Update the head pointer to NULL after freeing all nodes
+	*head = NULL;
 }
 
 void add_argument(CommandNode *node, char *argument)

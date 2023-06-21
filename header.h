@@ -13,7 +13,7 @@
 #include <pwd.h>
 
 
-//list for commands and pipes
+
 typedef struct commands CommandNode;
 struct commands
 {
@@ -24,7 +24,7 @@ struct commands
 	int pipeflag;
 	CommandNode *next;
 };
-//list for environment
+
 typedef struct envr_list EnvNode;
 struct envr_list
 {

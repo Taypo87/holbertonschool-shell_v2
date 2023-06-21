@@ -3,9 +3,9 @@
 CommandNode* parse_input(char *line, CommandNode **head)
 {
 	CommandNode *current = NULL;
-	char *line_copy;
+	char *line_copy, *token;
 	line_copy = copy_string(line);
-	char *token = strtok(line_copy, " \n");
+	token = strtok(line_copy, " \n");
 	if (token != NULL)
 	
 	{
@@ -51,7 +51,7 @@ size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env
 {
 	char *exit_string = "exit", *cd = "cd", *previousdir = "-";
 	char *env = "env", *set_evniron = "setenv", *unset_environ = "unsetenv";
-	char *line_copy, *token, *key, *value, *pwd = "PWD";
+	char *line_copy, *token, *key, *value, *pwd = "PWD", *cwd;
 	line_copy = copy_string(line);
 
 	token = strtok(line_copy, " ");
@@ -91,9 +91,7 @@ size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env
 				free(line_copy);
 				return(1);
 			}
-			// Update PWD environment variable
-			// this will need to be updated when we get to handling setenv and getenv
-			char *cwd = getcwd(NULL, 0);
+			cwd = getcwd(NULL, 0);
 			set_env(top, pwd, cwd);
 			free(line_copy);
 			free(cwd);

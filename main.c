@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **envp)
 		else
 		{
             env_array = linked_list_to_array(&top);
-			is_builtin = handle_builtins(line, &head, &top, env_array); //check for builtins exit cd env
+			is_builtin = handle_builtins(line, &head, &top, env_array);
             free_array(env_array);
 			head = parse_input(line, &head);
             env_array = linked_list_to_array(&top);

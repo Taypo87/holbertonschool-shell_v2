@@ -9,10 +9,11 @@ int check_pipe(char *token)
 void handle_pipe(CommandNode **head, CommandNode *current, char* line)
 {
 	char *cmd;
+    CommandNode *next_command;
     current->pipeflag = 1;
 	
 	cmd = strtok(line, " \n");
-    CommandNode *next_command = create_node(cmd);
+    next_command = create_node(cmd);
     next_command->args[0] = copy_string(cmd);
 
     if (*head == NULL)

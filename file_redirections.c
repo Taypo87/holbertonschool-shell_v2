@@ -2,7 +2,8 @@
 
 void setup_output_redirection(CommandNode *command)
 {
-    int output_fd = open(command->redirection_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    int output_fd;
+    output_fd = open(command->redirection_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (output_fd == -1)
     {
         perror("open");
@@ -14,7 +15,8 @@ void setup_output_redirection(CommandNode *command)
 
 void setup_input_redirection(CommandNode *command)
 {
-    int input_fd = open(command->redirection_file, O_RDONLY);
+    int input_fd;
+    input_fd = open(command->redirection_file, O_RDONLY);
     if (input_fd == -1)
     {
         perror("open");
@@ -26,7 +28,8 @@ void setup_input_redirection(CommandNode *command)
 
 void setup_append_redirection(CommandNode *command)
 {
-    int output_fd = open(command->redirection_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    int output_fd;
+    output_fd = open(command->redirection_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (output_fd == -1)
     {
         perror("open");
@@ -38,13 +41,14 @@ void setup_append_redirection(CommandNode *command)
 
 void setup_heredoc_redirection(CommandNode *command)
 {
+    int input_fd;
     FILE *file = fopen(command->redirection_file, "r");
     if (file == NULL)
     {
         perror("fopen");
         exit(EXIT_FAILURE);
     }
-    int input_fd = fileno(file);
+    input_fd = fileno(file);
     if (dup2(input_fd, STDIN_FILENO) == -1)
     {
         perror("dup2");

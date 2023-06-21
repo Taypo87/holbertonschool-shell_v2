@@ -44,11 +44,3 @@ char *copy_string(char *string)
 	dest[i] = '\0';
     return(dest);
 }
-
-
- 
-
-
-//if we hit a special charaacter, populate a new node, add new node to end.
-// when execute commands start from
-

@@ -23,11 +23,11 @@ void change_to_previous_directory()
 {
     const char *previous_directory;
 
-    previous_directory = getenv("OLDPWD");  // Get the value of the OLDPWD environment variable
+    previous_directory = getenv("OLDPWD");
     if (previous_directory != NULL)
     {
         if (chdir(previous_directory) == -1)
-        {  // Change to the previous directory using chdir
+        {
             perror("chdir");
         }
     }

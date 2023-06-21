@@ -54,14 +54,14 @@ void execute_command(CommandNode *command, int input_fd, char** env_array)
         perror("fork");
         exit(EXIT_FAILURE);
     }
-    else if (pid == 0)  // Child process
+    else if (pid == 0)
     {
         setup_redirection(command);
         execve(command->command, command->args, env_array);
         perror("execve");
         exit(EXIT_FAILURE);
     }
-    else  // Parent process
+    else
     {
         int status;
         waitpid(pid, &status, 0);
