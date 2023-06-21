@@ -154,5 +154,5 @@ char *pathfinder(char *command, EnvNode **top)
 
 	}
 	free(temp_path);
-	return (NULL);
+	return (command);
 }

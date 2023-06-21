@@ -6,7 +6,7 @@ int main(int argc, char **argv, char **envp)
  
 	char *line = NULL;
 	size_t bufsize = 0, is_builtin = 0;
-	int flags;
+	int flags, exit_status = 0;
     EnvNode *top = NULL;
 	CommandNode *head = NULL;
     char **env_array;
@@ -39,9 +39,16 @@ int main(int argc, char **argv, char **envp)
 
 			if (is_builtin == 0)
 			{
-                
 				head->command = pathfinder(head->command, &top);
-				execute_commands(head, env_array);
+				if (access(head->command, F_OK) != 0)
+				{
+					fprintf(stderr, "./hsh: 1: %s: not found\n", head->command);
+					exit_status = 127;
+				}
+				else
+				{
+					execute_commands(head, env_array);
+				}
 				free_command_list(&head);
 			}
             free_array(env_array);
@@ -51,5 +58,5 @@ int main(int argc, char **argv, char **envp)
 	free(line);
     free_env_list(&top);
 	free_command_list(&head);
-	exit(0);
+	exit(exit_status);
 }
