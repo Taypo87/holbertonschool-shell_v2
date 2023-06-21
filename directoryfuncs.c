@@ -1,36 +1,21 @@
 #include "header.h"
 
-uid_t get_uid(void)
+void change_to_home_directory(EnvNode *top)
 {
-    const char *self_path = "/proc/self";
-    struct stat st;
+    char *home = "HOME";
+    const char *home_directory = get_env(top, home);
 
-    if (stat(self_path, &st) == -1)
-	{
-        perror("stat");
-        return -1;
-    }
-
-    return (st.st_uid);
-}
-
-void change_to_home_directory()
-{
-    uid_t uid;
-    struct passwd *pw;
-
-    uid = get_uid();
-    pw = getpwuid(uid);
-    if (pw == NULL)
+    if (home_directory != NULL)
     {
-        // Failed to get user information
-        perror("getpwuid");
-        return;
+        if (chdir(home_directory) == -1)
+        {
+            perror("chdir");
+            return;
+        }
     }
-    if (chdir(pw->pw_dir) != 0)
+    else
     {
-        // Failed to change directory
-        perror("chdir");
+        printf("Home directory not found\n");
     }
 }
 
