@@ -55,3 +55,50 @@ int unset_env(EnvNode **top, char *key)
     }
     return (1);
 }
+char **linked_list_to_array(EnvNode **top)
+{
+    int count = 0, length;
+    char **array;
+    EnvNode *current = *top;
+
+    while (current != NULL) {
+        count++;
+        current = current->next;
+    }
+
+    array = (char**)malloc((count + 1)* sizeof(char*));
+    if (array == NULL)
+    {
+        printf("Memory allocation failed!");
+        exit(1);
+    }
+
+    current = *top;
+    int i = 0;
+    while (current != NULL)
+    {
+        length = snprintf(NULL, 0, "%s=%s", current->key, current->value);
+        array[i] = (char*)malloc((length + 1) * sizeof(char));
+        if (array[i] == NULL)
+        {
+            printf("Memory allocation failed!");
+            exit(1);
+        }
+        snprintf(array[i], length + 1, "%s=%s", current->key, current->value);
+
+        current = current->next;
+        i++;
+    }
+    array[i] = NULL;
+    return (array);
+}
+
+void free_array(char** array)
+{
+    for (int i = 0; array[i] != NULL; i++)
+    {
+        free(array[i]);
+    }
+    free(array);
+}
+

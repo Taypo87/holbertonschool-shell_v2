@@ -40,7 +40,7 @@ int string_compare(char *str1, char *str2);
 int string_length(char *str);
 char *copy_string(char *string);
 CommandNode* parse_input(char *line, CommandNode **head);
-size_t handle_builtins(char *line, CommandNode **head, EnvNode **top);
+size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env_array);
 int check_pipe(char *token);
 void handle_pipe(CommandNode **head, CommandNode *current, char* line);
 int print_env();
@@ -53,9 +53,9 @@ void free_command_list(CommandNode **head);
 void add_argument(CommandNode *node, char *argument);
 void setup_redirection(CommandNode *command);
 void setup_pipe(CommandNode *current, int *pipefd, int input_fd);
-void execute_command(CommandNode *command, int input_fd);
+void execute_command(CommandNode *command, int input_fd, char **env_array);
 void cleanup_pipe(CommandNode *current, int *pipefd, int input_fd);
-void execute_commands(CommandNode *head);
+void execute_commands(CommandNode *head, char **env_array);
 void setup_output_redirection(CommandNode *command);
 void setup_input_redirection(CommandNode *command);
 void setup_append_redirection(CommandNode *command);
@@ -74,7 +74,8 @@ void free_env_list(EnvNode **top);
 int set_env(EnvNode **top, char *key, char *value);
 char* get_env(EnvNode *top, char *key);
 int unset_env(EnvNode **top, char *key);
-
+char **linked_list_to_array(EnvNode **top);
+void free_array(char** array);
 
 #endif
 

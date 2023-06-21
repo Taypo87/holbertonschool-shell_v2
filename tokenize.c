@@ -47,7 +47,7 @@ CommandNode* parse_input(char *line, CommandNode **head)
 	return(*head);
 }
 
-size_t handle_builtins(char *line, CommandNode **head, EnvNode **top)
+size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env_array)
 {
 	char *exit_string = "exit", *cd = "cd", *previousdir = "-";
 	char *env = "env", *set_evniron = "setenv", *unset_environ = "unsetenv";
@@ -62,6 +62,7 @@ size_t handle_builtins(char *line, CommandNode **head, EnvNode **top)
 		{
 			free(line_copy);
 			free(line);
+            free_array(env_array);
             free_env_list(top);
 			free_command_list(head);
 			exit(0);

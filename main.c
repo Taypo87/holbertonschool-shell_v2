@@ -9,6 +9,7 @@ int main(int argc, char **argv, char **envp)
 	int flags;
     EnvNode *top = NULL;
 	CommandNode *head = NULL;
+    char **env_array;
 
 	env = envp;
     top = load_env(envp);
@@ -30,18 +31,24 @@ int main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			is_builtin = handle_builtins(line, &head, &top); //check for builtins exit cd env
+            env_array = linked_list_to_array(&top);
+			is_builtin = handle_builtins(line, &head, &top, env_array); //check for builtins exit cd env
+            free_array(env_array);
 			head = parse_input(line, &head);
+            env_array = linked_list_to_array(&top);
 
 			if (is_builtin == 0)
 			{
+                
 				head->command = pathfinder(head->command, &top);
-				execute_commands(head);
+				execute_commands(head, env_array);
 				free_command_list(&head);
 			}
+            free_array(env_array);
 		}
 	
 	}
+    free_array(env_array);
 	free(line);
     free_env_list(&top);
 	free_command_list(&head);
