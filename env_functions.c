@@ -78,13 +78,13 @@ char **linked_list_to_array(EnvNode **top)
     while (current != NULL)
     {
         length = (string_length(current->key) + string_length(current->value) + 2);
-        array[i] = (char*)malloc((length + 1) * sizeof(char));
+        array[i] = (char*)malloc((length) * sizeof(char));
         if (array[i] == NULL)
         {
             printf("Memory allocation failed!");
             exit(1);
         }
-        snprintf(array[i], length + 1, "%s=%s", current->key, current->value);
+        sprintf(array[i], "%s=%s", current->key, current->value);
 
         current = current->next;
         i++;
