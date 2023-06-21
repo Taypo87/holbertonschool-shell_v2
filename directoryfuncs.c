@@ -13,10 +13,6 @@ void change_to_home_directory(EnvNode *top)
             return;
         }
     }
-    else
-    {
-        printf("Home directory not found\n");
-    }
 }
 
 void change_to_previous_directory()
@@ -30,10 +26,6 @@ void change_to_previous_directory()
         {
             perror("chdir");
         }
-    }
-    else
-    {
-        printf("No previous directory available\n");
     }
 }
 
