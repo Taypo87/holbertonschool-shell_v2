@@ -77,7 +77,7 @@ char **linked_list_to_array(EnvNode **top)
     int i = 0;
     while (current != NULL)
     {
-        length = snprintf(NULL, 0, "%s=%s", current->key, current->value);
+        length = (string_length(current->key) + string_length(current->value) + 2);
         array[i] = (char*)malloc((length + 1) * sizeof(char));
         if (array[i] == NULL)
         {
