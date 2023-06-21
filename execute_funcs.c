@@ -57,7 +57,6 @@ void execute_command(CommandNode *command, int input_fd)
     else if (pid == 0)  // Child process
     {
         setup_redirection(command);
-        printf("%s\n", command->command);
         execve(command->command, command->args, env);
         perror("execve");
         exit(EXIT_FAILURE);
