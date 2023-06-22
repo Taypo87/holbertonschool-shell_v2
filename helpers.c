@@ -81,13 +81,13 @@ void handle_redirection(CommandNode *node, char *redirection)
 }
 
 
-int print_env()
+int print_env(char **env_array)
 {
 	int i = 0;
 
-	while (env[i])
+	while (env_array[i] != NULL)
 	{
-		printf("%s\n", env[i++]);
+		printf("%s\n", env_array[i++]);
 	}
 	return(0);
 }

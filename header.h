@@ -43,7 +43,7 @@ CommandNode* parse_input(char *line, CommandNode **head);
 size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env_array);
 int check_pipe(char *token);
 void handle_pipe(CommandNode **head, CommandNode *current, char* line);
-int print_env();
+int print_env(char **env_array);
 uid_t get_uid(void);
 void change_to_home_directory(EnvNode *top);
 void change_to_previous_directory();

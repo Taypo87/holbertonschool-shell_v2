@@ -84,6 +84,7 @@ char **linked_list_to_array(EnvNode **top)
             exit(1);
         }
         sprintf(array[i], "%s=%s", current->key, current->value);
+        //printf("%s\n", array[i]);
 
         current = current->next;
         i++;

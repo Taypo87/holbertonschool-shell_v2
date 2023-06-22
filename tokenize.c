@@ -98,7 +98,7 @@ size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env
 		}
 		else if (string_compare(token, env) == 0)
 		{
-			print_env();
+			print_env(env_array);
 			free(line_copy);
 			return(1);
 		}
