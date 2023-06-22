@@ -33,6 +33,10 @@ int main(int argc, char **argv, char **envp)
 		{
             env_array = linked_list_to_array(&top);
 			is_builtin = handle_builtins(line, &head, &top, env_array);
+			if (head != NULL)
+			{
+				free_command_list(&head);
+			}
             free_array(env_array);
 			head = parse_input(line, &head);
             env_array = linked_list_to_array(&top);

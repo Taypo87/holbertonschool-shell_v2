@@ -42,7 +42,6 @@ void change_directory(EnvNode *top, char *path)
     else
     {
         newpwd = get_env(top, pwd);
-        printf("%s\n", newpwd);
         set_env(&top, oldpwd, previous_directory);
         set_env(&top, pwd, newpwd);
     }
