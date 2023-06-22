@@ -56,7 +56,7 @@ size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env
 
 	token = strtok(line_copy, " ");
 
-	if (token != NULL)
+	while (token != NULL)
 	{
 		if (string_compare(token, exit_string) == 0)
 		{
@@ -117,6 +117,7 @@ size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env
             free(line_copy);
             return(1);
         }
+		token = strtok(NULL , " \n");
 	}
 	free(line_copy);
 	return(0);
