@@ -87,7 +87,8 @@ int print_env(char **env_array)
 
 	while (env_array[i] != NULL)
 	{
-		printf("%s\n", env_array[i++]);
+        if (env_array[i] != "_")
+		    printf("%s\n", env_array[i++]);
 	}
 	return(0);
 }
