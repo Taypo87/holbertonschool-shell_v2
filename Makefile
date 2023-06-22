@@ -3,7 +3,7 @@ SRC = main.c directoryfuncs.c execute_funcs.c file_redirections.c helpers.c list
 OBJ = ${SRC:.c=.o}
 NAME = hsh
 
-CFLAGS = -Wall -Werror -Wextra -pedantic -g -std=c99
+CFLAGS = -Wall -Werror -Wextra -pedantic -g
 
 all: ${NAME}
 

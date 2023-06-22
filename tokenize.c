@@ -74,13 +74,13 @@ size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env
 			{
 				if (string_compare(token, previousdir) == 0)
 				{
-					change_to_previous_directory();
+					change_to_previous_directory(*top);
 					free(line_copy);
 					return(1);
 				}
 				else
 				{
-					change_directory(token);
+					change_directory(*top, token);
 					free(line_copy);
 					return(1);
 				}

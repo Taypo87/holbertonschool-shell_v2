@@ -7,9 +7,17 @@ int set_env(EnvNode **top, char *key, char *value)
     {
         if (string_compare(current->key, key) == 0)
         {
-            free(current->value);
-            current->value = copy_string(value);
-            return (1);
+            if (current->value != NULL && value != NULL && string_compare(current->value, value) == 0)
+            {
+
+                return (1);
+            }
+            else
+            {
+                free(current->value);
+                current->value = copy_string(value);
+                return (1);
+            }
         }
         current = current->next;
     }
@@ -17,6 +25,7 @@ int set_env(EnvNode **top, char *key, char *value)
     add_node_to_list(top, node);
     return (1);
 }
+
 
 char* get_env(EnvNode *top, char *key)
 {
@@ -39,10 +48,14 @@ int unset_env(EnvNode **top, char *key)
 
     while (current != NULL)
     {
-        if (string_compare(current->key, key) == 0) {
-            if (prev == NULL) {
+        if (string_compare(current->key, key) == 0)
+        {
+            if (prev == NULL)
+            {
                 *top = current->next;
-            } else {
+            }
+            else
+            {
                 prev->next = current->next;
             }
             free(current->key);
@@ -84,7 +97,6 @@ char **linked_list_to_array(EnvNode **top)
             exit(1);
         }
         sprintf(array[i], "%s=%s", current->key, current->value);
-        //printf("%s\n", array[i]);
 
         current = current->next;
         i++;

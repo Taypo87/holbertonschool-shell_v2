@@ -15,11 +15,12 @@ void change_to_home_directory(EnvNode *top)
     }
 }
 
-void change_to_previous_directory()
+void change_to_previous_directory(EnvNode *top)
 {
     const char *previous_directory;
+    char* oldpwd = "OLDPWD";
 
-    previous_directory = getenv("OLDPWD");
+    previous_directory = get_env(top, oldpwd);
     if (previous_directory != NULL)
     {
         if (chdir(previous_directory) == -1)
@@ -29,7 +30,21 @@ void change_to_previous_directory()
     }
 }
 
-void change_directory(char *path)
+void change_directory(EnvNode *top, char *path)
 {
-    chdir(path);
+    char *previous_directory, *pwd = "PWD", *oldpwd = "OLDPWD", *newpwd;
+
+    previous_directory = get_env(top, pwd);
+    if (chdir(path) == -1)
+    {
+        perror("chdir");
+    }
+    else
+    {
+        newpwd = get_env(top, pwd);
+        printf("%s\n", newpwd);
+        set_env(&top, oldpwd, previous_directory);
+        set_env(&top, pwd, newpwd);
+    }
+
 }
