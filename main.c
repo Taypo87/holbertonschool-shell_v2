@@ -4,8 +4,8 @@
 int main(int argc, char **argv, char **envp)
 {
  
-	char *line = NULL;
-	size_t bufsize = 0, is_builtin = 0;
+	char *line = NULL, *new_line, *temp;
+	size_t bufsize = 0;
 	int flags, exit_status = 0;
     EnvNode *top = NULL;
 	CommandNode *head = NULL;
@@ -32,16 +32,28 @@ int main(int argc, char **argv, char **envp)
 		else
 		{
             env_array = linked_list_to_array(&top);
-			is_builtin = handle_builtins(line, &head, &top, env_array);
+			temp = (handle_builtins(line, &head, &top, env_array));
+			if (temp != NULL)
+			{
+				new_line = copy_string(temp);
+				free(temp);
+			}
+			else
+			{
+				new_line = NULL;
+				free(temp);
+			}
 			if (head != NULL)
 			{
 				free_command_list(&head);
 			}
             free_array(env_array);
-			head = parse_input(line, &head);
+			if (new_line != NULL)
+				head = parse_input(new_line, &head);
             env_array = linked_list_to_array(&top);
 
-			if (is_builtin == 0)
+			
+			if (head != NULL)
 			{
 				head->command = pathfinder(head->command, &top);
 				if (access(head->command, F_OK) != 0)
@@ -57,8 +69,10 @@ int main(int argc, char **argv, char **envp)
 			}
             free_array(env_array);
 		}
+		free(new_line);
 	
 	}
+	free(new_line);
 	free(line);
     free_env_list(&top);
 	free_command_list(&head);

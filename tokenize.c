@@ -47,17 +47,20 @@ CommandNode* parse_input(char *line, CommandNode **head)
 	return(*head);
 }
 
-size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env_array)
+char *handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env_array)
 {
 	char *exit_string = "exit", *cd = "cd", *previousdir = "-";
 	char *env = "env", *set_evniron = "setenv", *unset_environ = "unsetenv";
-	char *line_copy, *token, *key, *value, *pwd = "PWD", *cwd;
-	line_copy = copy_string(line);
+	char *line_copy, *token, *key, *value, *pwd = "PWD", *cwd, *pretok;
+	int used = 0;
 
+	line_copy = copy_string(line);
+	pretok = copy_string(line_copy);
 	token = strtok(line_copy, " ");
 
 	while (token != NULL)
 	{
+		used = 0;
 		if (string_compare(token, exit_string) == 0)
 		{
 			free(line_copy);
@@ -65,63 +68,70 @@ size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env
             free_array(env_array);
             free_env_list(top);
 			free_command_list(head);
+			free(pretok);
 			exit(0);
 		}
 		else if (string_compare(token, cd) == 0)
 		{
+			used = 1;
 			token = strtok(NULL, " \n");
 			if (token != NULL)
 			{
 				if (string_compare(token, previousdir) == 0)
 				{
 					change_to_previous_directory(*top);
-					free(line_copy);
-					return(1);
 				}
 				else
 				{
 					change_directory(*top, token);
-					free(line_copy);
-					return(1);
 				}
 			}   
 			else
 			{
 				change_to_home_directory(*top);
-				free(line_copy);
-				return(1);
 			}
 			cwd = getcwd(NULL, 0);
 			set_env(top, pwd, cwd);
-			free(line_copy);
 			free(cwd);
 		}
 		else if (string_compare(token, env) == 0)
 		{
+			used = 1;
 			print_env(env_array);
-			free(line_copy);
-			return(1);
 		}
         else if (string_compare(token, set_evniron) == 0)
         {
+			used = 1;
             key = strtok(NULL, " ");
             value = strtok(NULL, " \n");
             set_env(top, key, value);
-            free(line_copy);
-            return(1);
         }
         else if (string_compare(token, unset_environ) == 0)
         {
+			used = 1;
             token = strtok(NULL, " \n");
             unset_env(top, token);
-            free(line_copy);
-            return(1);
         }
-		token = strtok(NULL , " \n");
+		if (used == 0)
+		{
+			free(line_copy);
+			return(pretok);
+		}
+		else
+		{
+			free(pretok);
+			pretok = copy_string(line_copy);
+			token = strtok(NULL , " \n");
+		}
+		
 	}
+	free(pretok);
 	free(line_copy);
-	return(0);
+	return(NULL);
 }
+
+
+
 
 char *pathfinder(char *command, EnvNode **top)
 

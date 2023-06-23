@@ -40,7 +40,7 @@ int string_compare(char *str1, char *str2);
 int string_length(char *str);
 char *copy_string(char *string);
 CommandNode* parse_input(char *line, CommandNode **head);
-size_t handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env_array);
+char *handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env_array);
 int check_pipe(char *token);
 void handle_pipe(CommandNode **head, CommandNode *current, char* line);
 int print_env(char **env_array);
