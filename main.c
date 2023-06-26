@@ -72,7 +72,7 @@ int main(int argc, char **argv, char **envp)
 		free(new_line);
 	
 	}
-	free(new_line);
+	//free(new_line);
 	free(line);
     free_env_list(&top);
 	free_command_list(&head);
