@@ -1,11 +1,11 @@
 CC = gcc
-SRC = main.c directoryfuncs.c execute_funcs.c file_redirections.c helpers.c list_functions.c strings.c tokenize.c env_functions.c env_list.c
+SRC = $(wildcard *.c)
 OBJ = ${SRC:.c=.o}
 NAME = hsh
 
 CFLAGS = -Wall -Werror -Wextra -pedantic -g -std=c99
 
-all: ${NAME}
+all: ${NAME} clean
 
 ${NAME}: ${OBJ}
 	${CC} $(CFLAGS) ${OBJ} -o ${NAME}
@@ -14,6 +14,6 @@ ${NAME}: ${OBJ}
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	${RM} -f ${OBJ} ${NAME}
+	${RM} -f ${OBJ}
 
 .PHONY: all clean
