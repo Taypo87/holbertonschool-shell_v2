@@ -1,4 +1,4 @@
-#include "header.h"
+#include "lists.h"
 
 CommandNode *create_node(char *command)
 {

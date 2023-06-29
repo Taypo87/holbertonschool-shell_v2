@@ -49,6 +49,7 @@ CommandNode* parse_input(char *line, CommandNode **head)
 
 char *handle_builtins(char *line, CommandNode **head, EnvNode **top, char **env_array)
 {
+	char builtin_commands[]
 	char *exit_string = "exit", *cd = "cd", *previousdir = "-";
 	char *env = "env", *set_evniron = "setenv", *unset_environ = "unsetenv";
 	char *line_copy, *token, *key, *value, *pwd = "PWD", *cwd, *pretok;
