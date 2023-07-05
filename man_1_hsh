@@ -1,0 +1,56 @@
+.HSH(1)                Shell Project                .HSH(1)
+
+NAME
+       hsh - UNIX command line interpreter
+
+SYNOPSIS
+       hsh
+
+DESCRIPTION
+       hsh is a simple UNIX command line interpreter that allows you to execute commands and perform basic shell operations. It provides a prompt for the user to enter commands, executes the commands, and displays the results. The prompt is displayed again after each command execution.
+
+USAGE
+       hsh
+
+COMMAND LINE SYNTAX
+       hsh supports the following command line syntax:
+
+       command [arguments]
+
+       Each command line ends with a new line.
+
+BUILT-IN COMMANDS
+       hsh implements the following built-in commands:
+
+       exit [status]
+              Exits the shell. If an optional status is provided, the shell exits with that status. Behaves similarly to the exit command in sh.
+
+       cd [path]
+              Changes the current directory of the shell process. If no argument is given, it changes to the home directory ($HOME). Supports the command cd - to switch to the previous directory. Updates the PWD environment variable accordingly.
+
+       env    Prints the current environment variables.
+
+ERROR HANDLING
+       hsh handles errors in the following ways:
+
+       - If an executable command cannot be found, an error message is displayed, and the prompt is displayed again.
+       - hsh handles the "end of file" condition (Ctrl+D) gracefully.
+
+ENVIRONMENT VARIABLES
+       hsh handles and parses the PATH environment variable to find executables.
+
+AUTHOR
+       Taylor Poczynek
+
+REPORTING BUGS
+       Report any bugs to taylor.poczynek87@gmail.com.
+
+SEE ALSO
+       sh(1), bash(1)
+
+COPYRIGHT
+       This is free and unencumbered software released into the public domain.
+
+NOTES
+       This shell project was completed as part of a course and personal project.
+
